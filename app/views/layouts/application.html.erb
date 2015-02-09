@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Ideon</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+	<head>
+	  <title>Ideon</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div class="container" id="main-container">
+			<div class="container" id="page-content">
+				<%= yield %>
+			</div>
+			<nav class="navbar navbar-default navbar-fixed-top" id="main-menu">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">IDEON</a>
+				</div>
+				<div class="collapse navbar-collapse">
+		      		<button type ="button" class="btn btn-success" id="button-nueva">Nueva</button>
+			        <button type ="button" class="btn btn-danger" id="button-listar-borradas">Listar Borradas</span></button>
+			        <button type ="button" class="btn btn-warning" id="button-listar-favoritas">Listar Favoritas</button>
+			    </div>
+			</nav>
+		</div>
+	</body>
 </html>
