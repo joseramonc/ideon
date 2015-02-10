@@ -1,4 +1,11 @@
 /* custom site layout */
+html.turbolinks-progress-bar {
+  &:before {
+    background-color: $brand-primary !important;
+    height: 5px !important;
+  }
+}
+
 .navbar-form.navbar-left {
   .btn.btn-info {
     color: $navbar-default-link-color;

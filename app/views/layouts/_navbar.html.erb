@@ -14,11 +14,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="#">Notas
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
+        <%= content_tag :li, class: active_path(:notes) do %>
+          <%= link_to "Notas", notes_path %>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

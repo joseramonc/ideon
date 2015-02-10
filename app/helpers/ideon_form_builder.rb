@@ -8,9 +8,25 @@ class IdeonFormBuilder < ActionView::Helpers::FormBuilder
     label = label(attribute) + text_field(attribute, options)
   end
 
+  def label_text_area(attribute, options={})
+    options = {
+      class: 'form-control'
+    }.merge!(options)
+
+    label = label(attribute) + text_area(attribute, options)
+  end
+
+  def check_box(attribute, options={})
+    @template.content_tag :div, class: 'checkbox' do
+      @template.content_tag :label do
+        super(attribute, options) + label(attribute)
+      end
+    end
+  end
+
   def submit(value='Guardar', options={})
     options = {
-      class: 'btn btn-primary'
+      class: 'btn btn-success'
     }.merge!(options)
 
     container class: 'form-group pull-right' do

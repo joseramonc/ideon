@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h2>
+  <%= @note.title %>
+</h2>
+
+<strong>Body:</strong>
+<div class="well">
+  <%= @note.body %>
+</div>
+
+<p>
+  <strong>Favorite:</strong>
+  <%= fa_icon(icon(@note), text: @note.favorite.to_s) %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @note.status %>
+</p>
+
+<%= link_to 'Editar', edit_note_path(@note), class: 'btn btn-info' %>
+<%= link_to 'Todas las notas', notes_path, class: 'btn btn-primary' %>
