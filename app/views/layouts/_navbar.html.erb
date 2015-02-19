@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -8,24 +8,37 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">IDEON</a>
+      <%= link_to 'IDEON', root_path, class: "navbar-brand" %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <%= content_tag :li, class: active_path(:notes) do %>
-          <%= link_to "Notas", notes_path %>
+        <% if current_user %>
+          <%= content_tag :li, class: active_path(:notes) do %>
+            <%= link_to "Notas", notes_path %>
+          <% end %>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ayuda <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Configuración</a></li>
-            <li><a href="#">Sincronizar notas</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Salir</a></li>
+            <% if current_user %>
+              <li><a href="#">Configuración</a></li>
+              <li><a href="#">Sincronizar notas</a></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "Salir", destroy_user_session_path, method: :delete %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to "Iniciar Sesión", new_user_session_path %>
+              </li>
+              <li>
+                <%= link_to "Registrarse", new_user_registration_path %>
+              </li>
+            <% end %>
           </ul>
         </li>
       </ul>

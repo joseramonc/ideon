@@ -1,19 +1,14 @@
-$grid-gutter-width:         30px !default;
+$grid-gutter-width: 30px !default;
 
-$navbar-height: 75px;
-$navbar-default-bg: #A7C899;
+$navbar-height:        75px;
+$navbar-default-bg:    #A7C899;
 $navbar-border-radius: 0px;
 $navbar-margin-bottom: 0px;
 
-// Large screen / wide desktop
-$container-large-desktop:      (1110px + $grid-gutter-width) !default;
-//** For `$screen-lg-min` and up.
-$container-lg:                 $container-large-desktop !default;
-
 // Navbar links
-$navbar-default-link-color:                #743A60 !default;
-$navbar-default-link-hover-color:          #AD9F63 !default;
-$navbar-default-link-hover-bg:             #743A60 !default;
+$navbar-default-link-color:                #882537 !default;
+$navbar-default-link-hover-bg:             #C17855 !default;
+$navbar-default-brand-hover-bg:            #C17855 !default;
 $navbar-default-link-active-color:         #39223F !default;
 
 $brand-primary:         darken(#1DABB8, 6.5%) !default; // #337ab7
@@ -23,3 +18,4 @@ $brand-warning:         #F38A10 !default;
 $brand-danger:          #C82647 !default;
 
 $jumbotron-heading-color: #AD9F63 !default;
+$jumbotron-border-radius: 2px;

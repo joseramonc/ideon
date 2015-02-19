@@ -1,0 +1,31 @@
+<h1>Registro</h1>
+
+<%= form_for(
+    resource,
+    as: resource_name,
+    url: registration_path(resource_name),
+    builder: IdeonFormBuilder
+  ) do |f| %>
+  <%= devise_error_messages! %>
+
+  <%= f.container do %>
+    <%= f.label_email_field :email, autofocus: true %>
+  <% end %>
+
+  <%= f.container do %>
+    <%= f.label_password_field :password, autocomplete: "off" %>
+    <% if @validatable %>
+      <i>(<%= @minimum_password_length %> characters minimum)</i>
+    <% end %><br />
+  <% end %>
+
+  <%= f.container do %>
+    <%= f.label_password_field :password_confirmation, autocomplete: "off" %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Registrarse" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

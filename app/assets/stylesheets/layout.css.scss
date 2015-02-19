@@ -6,8 +6,16 @@ html.turbolinks-progress-bar {
   }
 }
 
-.navbar-form.navbar-left {
-  .btn.btn-info {
-    color: $navbar-default-link-color;
+.navbar {
+  .container {
+    .navbar-brand {
+      margin-left: 0px;
+    }
+  }
+}
+
+.container{
+  .jumbotron {
+    border-radius: $jumbotron-border-radius;
   }
 }
