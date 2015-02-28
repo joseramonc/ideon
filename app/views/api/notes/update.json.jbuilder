@@ -1,2 +1,3 @@
-<h1>Api::Notes#update</h1>
-<p>Find me in app/views/api/notes/update.html.erb</p>
+json.note do
+  json.partial! @note, partial: 'api/notes/note', as: :note
+end
