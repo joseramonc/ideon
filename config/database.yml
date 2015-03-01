@@ -28,7 +28,6 @@ development:
 
 production:
   <<: *default
-  encoding: unicode
   username: <%= Rails.application.secrets.DATABASE_USERNAME %>
   password: <%= Rails.application.secrets.DATABASE_PASSWORD %>
   host: 127.0.0.1
