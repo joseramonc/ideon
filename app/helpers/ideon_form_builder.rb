@@ -8,6 +8,22 @@ class IdeonFormBuilder < ActionView::Helpers::FormBuilder
     label = label(attribute) + text_field(attribute, options)
   end
 
+  def label_email_field(attribute, options={})
+    options = {
+      class: 'form-control'
+    }.merge!(options)
+
+    label = label(attribute) + email_field(attribute, options)
+  end
+
+  def label_password_field(attribute, options={})
+    options = {
+      class: 'form-control'
+    }.merge!(options)
+
+    label = label(attribute) + password_field(attribute, options)
+  end
+
   def label_text_area(attribute, options={})
     options = {
       class: 'form-control'

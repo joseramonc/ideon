@@ -1,7 +1,9 @@
 <% if object.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(object.errors.count, "error") %> prohibited this <%= object %> from being saved:</h2>
-
+  <div class="alert alert-error" id="error_explanation">
+    <h2>
+      <%= object.errors.count %>
+      <%= object.errors.count == 1 ? 'Error no dejó' : 'Errores no dejaron' %>
+      que se guarde esta nota :(
     <ul>
     <% object.errors.full_messages.each do |message| %>
       <li><%= message %></li>

@@ -10,6 +10,12 @@
     <%= render "layouts/navbar" %>
     <div class="container" id="main-container">
       <div class="jumbotron">
+        <% flash.each do |error_type, message| %>
+          <div class="alert alert-<%= error_class(error_type) %>" role="alert">
+            <span class="sr-only">Error:</span>
+            <%= message %>
+          </div>
+        <% end %>
         <%= yield %>
       </div>
     </div>
