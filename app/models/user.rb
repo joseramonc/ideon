@@ -7,4 +7,17 @@ class User < ActiveRecord::Base
           :rememberable,
           :trackable,
           :validatable
+
+  has_many :notes
+
+  def ensure_or_generate_token
+    unless self.auth_token
+      loop do 
+        self.auth_token = SecureRandom.hex
+        break if !User.exists?(auth_token: self.auth_token)
+      end
+      self.save!
+    end
+  end
+
 end

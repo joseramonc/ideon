@@ -5,8 +5,11 @@ module Api
     protected
 
     def authenticate_with_token
-      if true # User.find_by_token(params[:token]) etc...
-
+      auth_token = request.headers["Authorization"]
+      if user = User.find_by_auth_token(auth_token)
+        sign_in(:user, user)
+      else
+        head :unauthorized
       end
     end
   end
