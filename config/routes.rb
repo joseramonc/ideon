@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :notes
 
   namespace :api, defaults: {format: :json} do
-    resources :notes, only: [:index, :create, :update, :destroy]
+    resources :notes, only: [:index, :create, :update, :destroy, :show]
     resource :token, only: [:create]
   end
 end
