@@ -6,6 +6,7 @@ Currently server is running at: [http://104.131.189.224](http://104.131.189.224)
     curl -X POST http://localhost:3000/api/token --data "email=joserracamacho@gmail.com&password=12345678"
 
 reponse:
+
     {"user":{"auth_token":"26157f9b236b9bc23ccfed01200fb725"}
 
 ## authenticated requests
