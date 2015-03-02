@@ -3,7 +3,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 ### API usage
 
 ## get token:
-    curl -X POST http://localhost:3000/api/token --data "email=joserracamacho@gmail.com&password=12345678"
+    curl -X POST http://104.131.189.224/api/token --data "email=joserracamacho@gmail.com&password=12345678"
 
 #### reponse:
     {"user":{"auth_token":"26157f9b236b9bc23ccfed01200fb725"}
@@ -12,7 +12,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 
 ### List all notes
 
-    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://localhost:3000/api/notes
+    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://104.131.189.224/api/notes
 
 #### response:
 
@@ -21,7 +21,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 
 ### Create a Note
 
-    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" -X POST http://localhost:3000/api/notes --data "note[title]=hola&note[body]=big body&note[favorite]=1&note[status]=0"
+    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" -X POST http://104.131.189.224/api/notes --data "note[title]=hola&note[body]=big body&note[favorite]=1&note[status]=0"
 
 #### response:
     {"note":{"id":2,"title":"hola","body":"big body","favorite":true,"status":false}}
@@ -29,7 +29,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 
 ### Get a single note
 
-    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" -X POST http://localhost:3000/api/notes --data "note[title]=hola&note[body]=big body&note[favorite]=1&note[status]=0"
+    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" -X POST http://104.131.189.224/api/notes --data "note[title]=hola&note[body]=big body&note[favorite]=1&note[status]=0"
 
 #### response:
 
@@ -38,7 +38,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 
 ### Updating a note (id=1)
 
-    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://localhost:3000/api/notes/1 -X PUT --data "note[title]=hello notes&note[body]=update body&note[favorite]=0&note[status]=1"
+    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://104.131.189.224/api/notes/1 -X PUT --data "note[title]=hello notes&note[body]=update body&note[favorite]=0&note[status]=1"
 
 #### response:
 
@@ -46,7 +46,7 @@ Currently server is running at: (http://104.131.189.224)[http://104.131.189.224]
 
 ### Deleting a note (id=2)
 
-    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://localhost:3000/api/notes/2 -X DELETE
+    curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://104.131.189.224/api/notes/2 -X DELETE
 
 #### response
 
