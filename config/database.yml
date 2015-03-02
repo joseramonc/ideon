@@ -28,5 +28,6 @@ development:
 
 production:
   <<: *default
+  database: rails
   username: <%= Rails.application.secrets.database_username %>
   password: <%= Rails.application.secrets.database_password %>
