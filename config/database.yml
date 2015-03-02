@@ -12,7 +12,7 @@ default: &default
   adapter: mysql2
   pool: 5
   timeout: 5000
-  username: <%= Rails.application.secrets.DATABASE_USERNAME %>
+  username: <%= Rails.application.secrets.database_username %>
 <% if socket %>
   host: localhost
   socket: <%= socket %>
@@ -28,6 +28,5 @@ development:
 
 production:
   <<: *default
-  username: <%= Rails.application.secrets.DATABASE_USERNAME %>
-  password: <%= Rails.application.secrets.DATABASE_PASSWORD %>
-  host: 127.0.0.1
+  username: <%= Rails.application.secrets.database_username %>
+  password: <%= Rails.application.secrets.database_password %>
