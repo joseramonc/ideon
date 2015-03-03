@@ -1,0 +1,29 @@
+<h1>Notas Favoritas</h1>
+
+<table class="table table-hover table-stripped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Favorite</th>
+      <!--<th>Status</th>-->
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @notes.each do |note| %>
+      <tr>
+        <td><%= note.title %></td>
+        <td><%= note.body %></td>
+        <td><%= link_to fa_icon(icon(note)), {:controller => "notes", :action => "manage_favorites", :note => note.id }%></td>
+        <td><%= note.status %></td>
+        <td><%= link_to fa_icon('search', text: 'Ver'), note %></td>
+        <td><%= link_to fa_icon('pencil', text: 'Editar'), edit_note_path(note) %></td>
+        <td><%= link_to fa_icon('trash-o', text: 'Borrar'), note, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
