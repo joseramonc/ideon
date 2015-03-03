@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.where(user: current_user)
+    @notes = Note.all
   end
 
   # GET /notes/1
@@ -25,11 +25,10 @@ class NotesController < ApplicationController
   # POST /notes.json
   def create
     @note = Note.new(note_params)
-    @note.user = current_user
 
     respond_to do |format|
       if @note.save
-        format.html { redirect_to @note, notice: 'Nota creada con éxito.' }
+        format.html { redirect_to @note, notice: 'Note was successfully created.' }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
@@ -43,7 +42,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Nota actualizada.' }
+        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit }
@@ -57,15 +56,31 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Nota eliminada con éxito.' }
+      format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
+  def list_favorites
+    @notes = Note.where(favorite: true)   
+  end
+
+
+  def manage_favorites
+    @note = Note.find(params[:note])
+    if @note.read_attribute(:favorite) == true
+      @note.update_attribute(:favorite, "false")
+    else
+       @note.update_attribute(:favorite, "true")
+    end
+    redirect_to @note, notice: 'Note was successfully updated.'
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_note
-      @note = current_user.notes.find(params[:id])
+      @note = Note.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
