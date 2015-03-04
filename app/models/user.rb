@@ -10,9 +10,13 @@ class User < ActiveRecord::Base
 
   has_many :notes
 
+  def favorite_notes
+    notes.where(favorite: true)
+  end
+
   def ensure_or_generate_token
     unless self.auth_token
-      loop do 
+      loop do
         self.auth_token = SecureRandom.hex
         break if !User.exists?(auth_token: self.auth_token)
       end

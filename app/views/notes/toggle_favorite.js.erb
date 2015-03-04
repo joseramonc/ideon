@@ -1,0 +1,1 @@
+$('#favorite-note-' + '<%= @note.id %>').html('<%= escape_javascript(link_to(fa_icon(icon(@note)), toggle_favorite_note_path(@note), remote: true, method: :put)) %>')

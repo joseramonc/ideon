@@ -1,14 +1,24 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [
+                            :show,
+                            :toggle_favorite,
+                            :edit,
+                            :update,
+                            :destroy
+                          ]
 
   # GET /notes
-  # GET /notes.json
   def index
-    @notes = Note.all
+    @notes = current_user.notes
+  end
+
+  # GET /notes/favorites
+  def favorites
+    @notes = current_user.favorite_notes
+    render 'index'
   end
 
   # GET /notes/1
-  # GET /notes/1.json
   def show
   end
 
@@ -22,58 +32,39 @@ class NotesController < ApplicationController
   end
 
   # POST /notes
-  # POST /notes.json
   def create
     @note = Note.new(note_params)
 
-    respond_to do |format|
-      if @note.save
-        format.html { redirect_to @note, notice: 'Note was successfully created.' }
-        format.json { render :show, status: :created, location: @note }
-      else
-        format.html { render :new }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end
+    if @note.save
+      redirect_to @note, notice: 'Note was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /notes/1
-  # PATCH/PUT /notes/1.json
   def update
-    respond_to do |format|
-      if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
-        format.json { render :show, status: :ok, location: @note }
-      else
-        format.html { render :edit }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end
+    if @note.update(note_params)
+      redirect_to @note, notice: 'Note was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /notes/1
-  # DELETE /notes/1.json
   def destroy
     @note.destroy
+    redirect_to notes_url, notice: 'Note was successfully destroyed.'
+  end
+
+
+  # PUT /notes/1/toggle_favorite
+  def toggle_favorite
+    @note.toggle!(:favorite)
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+      format.js { render }
     end
-  end
-
-  def list_favorites
-    @notes = Note.where(favorite: true)   
-  end
-
-
-  def manage_favorites
-    @note = Note.find(params[:note])
-    if @note.read_attribute(:favorite) == true
-      @note.update_attribute(:favorite, "false")
-    else
-       @note.update_attribute(:favorite, "true")
-    end
-    redirect_to @note, notice: 'Note was successfully updated.'
   end
 
 
