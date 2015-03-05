@@ -1,39 +1,35 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h1>Editar <%= current_user.email %></h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, builder: IdeonFormBuilder) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+  <%= f.container do %>
+    <%= f.label_email_field :email, autofocus: true %>
+  <% end %>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+  <%= f.container do %>
+    <%= f.label :password %> <i>(Dejar en blanco si no se quiere cambiar)</i><br />
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+  <% end %>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+  <%= f.container do %>
+    <%= f.label_password_field :password_confirmation, autocomplete: "off" %>
+  <% end %>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
+  <%= f.container do %>
+    <%= f.label :current_password %> <i>(Necesitamos tu contraseña actual para poder hacer cambios)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %>
+<br>
+<%= link_to "Regresar", :back, class: 'btn btn-default' %>
