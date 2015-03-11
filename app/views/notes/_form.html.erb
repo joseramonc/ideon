@@ -13,5 +13,12 @@
 
   <%= f.check_box :status %>
 
+  <%= collection_check_boxes :note, :tag_ids, @tags, :id, :name do |builder| %>
+    <%= builder.label(class: 'check_box') do %>
+      <% icon = content_tag(:i, nil, class: 'fa fa-tag') %>
+      <% checkbox = builder.check_box(class: 'check_box') %>
+      <%= "#{checkbox} #{builder.text} #{icon}".html_safe %>
+    <% end %>
+  <% end %>
   <%= f.submit %>
 <% end %>

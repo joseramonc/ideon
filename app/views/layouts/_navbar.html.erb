@@ -16,7 +16,10 @@
       <ul class="nav navbar-nav">
         <% if current_user %>
           <%= content_tag :li, class: active_path(:notes) do %>
-            <%= link_to "Notas", notes_path %>
+            <%= link_to 'Notas', notes_path %>
+          <% end %>
+          <%= content_tag :li, class: active_path(:tags) do %>
+            <%= link_to 'Etiquetas', tags_path %>
           <% end %>
         <% end %>
       </ul>

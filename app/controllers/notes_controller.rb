@@ -6,15 +6,18 @@ class NotesController < ApplicationController
                             :update,
                             :destroy
                           ]
+  before_action :set_tags, only: [:index, :favorites, :new, :create, :edit, :update]
 
   # GET /notes
   def index
     @notes = current_user.notes
+    filter_by_tag(params[:tag])
   end
 
   # GET /notes/favorites
   def favorites
     @notes = current_user.favorite_notes
+    filter_by_tag(params[:tag])
     render 'index'
   end
 
@@ -35,6 +38,7 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(note_params)
 
+    @note.user_id = current_user.id
     if @note.save
       redirect_to @note, notice: 'Note was successfully created.'
     else
@@ -76,6 +80,22 @@ class NotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:title, :body, :favorite, :status)
+      params.require(:note).permit(
+        { tag_ids: [] },
+        :title,
+        :body,
+        :favorite,
+        :status
+      )
+    end
+
+    def set_tags
+      @tags = current_user.tags
+    end
+
+    def filter_by_tag(selected_tag)
+      if selected_tag.present? && selected_tag.to_i > 0
+        @notes = current_user.notes.joins(:tags).where('tags.id = ?', selected_tag.to_i)
+      end
     end
 end

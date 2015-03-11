@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tags
+
   namespace :api, defaults: {format: :json} do
     resources :notes, only: [:index, :show, :create, :update, :destroy]
     resource :token, only: [:create]

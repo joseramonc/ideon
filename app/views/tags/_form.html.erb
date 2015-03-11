@@ -1,0 +1,9 @@
+<%= form_for(@tag, builder: IdeonFormBuilder) do |f| %>
+  <%= render 'shared/errors', object: @tag %>
+
+  <%= f.container do %>
+    <%= f.label_text_field :name %>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

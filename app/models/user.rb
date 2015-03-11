@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
           :validatable
 
   has_many :notes
+  has_many :tags
 
   def favorite_notes
     notes.where(favorite: true)

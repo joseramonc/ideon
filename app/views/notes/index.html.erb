@@ -1,4 +1,16 @@
 <h1>Mostrando Notas</h1>
+<%= select_tag(
+  'Mostrar etiqueta',
+  options_from_collection_for_select(
+    @tags,
+    :id,
+    :name,
+    params[:tag]
+  ),
+  include_blank: 'Todas',
+  id: 'tag-select',
+  class: 'form-control'
+) %>
 <%= link_to fa_icon('plus', text: 'Nueva Nota'), new_note_path, class: 'btn btn-primary btn-lg pull-right' %>
 <%= link_to fa_icon('star', text: 'Filtrar favoritas'), favorites_notes_path, class: 'btn btn-info btn-lg pull-right' %>
 
