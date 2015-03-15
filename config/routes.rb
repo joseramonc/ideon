@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users
   root to: 'notes#index'
 
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     resources :notes, only: [:index, :show, :create, :update, :destroy]
+    resources :tags, only: [:index, :create, :update, :destroy]
+    resource :user, only: [:create, :update, :destroy]
     resource :token, only: [:create]
   end
 end
