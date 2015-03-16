@@ -22,7 +22,6 @@
       <th>Body</th>
       <th>Favorite</th>
       <th>Status</th>
-      <th>Deleted</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -34,10 +33,10 @@
         <td><%= note.body %></td>
         <td id="favorite-note-<%= note.id %>"><%= link_to fa_icon(icon(note)), toggle_favorite_note_path(note), remote: true, method: :put %></td>
         <td><%= note.status %></td>
-        <td id="deleted-note-<%= note.id %>"><%= link_to fa_icon('trash-o'), toggle_deleted_note_path(note), remote: true, method: :put, data: { confirm: 'Quieres eliminar la nota?' } %></td>
         <td><%= link_to fa_icon('search', text: 'Ver'), note %></td>
         <td><%= link_to fa_icon('pencil', text: 'Editar'), edit_note_path(note) %></td>
-        <td><%= link_to fa_icon('trash-o', text: 'Borrar'), note, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
+        <td id="deleted-note-<%= note.id %>"><%= link_to fa_icon(deleted_icon(note), text: texto(note)), toggle_deleted_note_path(note), method: :put, data: { confirm: 'Estas seguro?' } %></td>
+        
       </tr>
     <% end %>
   </tbody>

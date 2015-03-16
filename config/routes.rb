@@ -6,17 +6,10 @@ Rails.application.routes.draw do
   resources :notes do
     member do
       put 'toggle_favorite'
-    end
-    collection do
-      get 'favorites'
-    end
-  end
-
-  resources :notes do
-    member do
       put 'toggle_deleted'
     end
     collection do
+      get 'favorites'
       get 'deleted'
     end
   end
