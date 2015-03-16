@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311171955) do
+ActiveRecord::Schema.define(version: 20150316031640) do
 
   create_table "note_tags", force: :cascade do |t|
     t.integer  "note_id",    limit: 4
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 20150311171955) do
   create_table "notes", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.text     "body",       limit: 65535
-    t.boolean  "favorite",   limit: 1
+    t.boolean  "favorite",   limit: 1,     default: false
     t.boolean  "status",     limit: 1
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "user_id",    limit: 4
   end
 
