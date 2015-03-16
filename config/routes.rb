@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notes do
+    member do
+      put 'toggle_deleted'
+    end
+    collection do
+      get 'deleted'
+    end
+  end
+
   resources :tags
 
   namespace :api, defaults: {format: :json} do

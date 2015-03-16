@@ -1,0 +1,1 @@
+$('#deleted-note-' + '<%= @note.id %>').html('<%= escape_javascript(link_to("close")), toggle_deleted_note_path(@note), remote: true, method: :put)) %>')

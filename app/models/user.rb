@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     notes.where(favorite: true)
   end
 
+  def deleted_notes
+    notes.where(deleted: true)
+  end
+
   def ensure_or_generate_token
     unless self.auth_token
       loop do
