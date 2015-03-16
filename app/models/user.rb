@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
           :trackable,
           :validatable
 
-  has_many :notes
-  has_many :tags
+  has_many :notes, dependent: :destroy
+  has_many :tags, dependent: :destroy
 
   def favorite_notes
     notes.where(favorite: true)
