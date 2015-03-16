@@ -4,13 +4,14 @@ class NotesController < ApplicationController
                             :toggle_favorite,
                             :edit,
                             :update,
-                            :destroy
+                            :destroy,
+                            :toggle_deleted
                           ]
-  before_action :set_tags, only: [:index, :favorites, :new, :create, :edit, :update]
+  before_action :set_tags, only: [:index, :favorites, :new, :create, :edit, :update, :deleted]
 
   # GET /notes
   def index
-    @notes = current_user.notes
+    @notes = current_user.notes.where(deleted: false)
     filter_by_tag(params[:tag])
   end
 
@@ -20,6 +21,14 @@ class NotesController < ApplicationController
     filter_by_tag(params[:tag])
     render 'index'
   end
+
+  #GET /notes/deleted
+  def deleted
+    @notes = current_user.deleted_notes
+    filter_by_tag(params[:tag])
+    render 'index'
+  end
+
 
   # GET /notes/1
   def show
@@ -71,6 +80,15 @@ class NotesController < ApplicationController
     end
   end
 
+  # PUT /notes/1/toggle_deleted
+  def toggle_deleted
+    @note.toggle!(:deleted)
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was successfully updated.' }
+      format.js { render }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -85,7 +103,8 @@ class NotesController < ApplicationController
         :title,
         :body,
         :favorite,
-        :status
+        :status,
+        :deleted
       )
     end
 
