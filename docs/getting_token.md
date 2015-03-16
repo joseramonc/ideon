@@ -4,7 +4,7 @@ This requests are unauthenticated
 
 ### Create user
 
-    curl -X POST -H "Content-Type: application/json" -d '{"user":{"email":"plata@mail.com","password":"12345678"}}' http://localhost:3000/api/user
+    curl -X POST -H "Content-Type: application/json" -d '{"user":{"email":"plata@mail.com","password":"123456"}}' http://104.131.189.224/api/user
 
   response:
 
