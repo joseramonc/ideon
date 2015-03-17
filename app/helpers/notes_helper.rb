@@ -8,18 +8,18 @@ module NotesHelper
   end
 
   def deleted_icon(note)
-  	if note.deleted
-  		'check'
-  	else
-  		'close'
-  	end
+    if note.deleted
+      'check'
+    else
+      'close'
+    end
   end
 
   def texto(note)
-  	if note.deleted
-  		'Reestablecer'
-  	else
-  		'Eliminar'
-  	end
+    if note.deleted
+      'Reestablecer'
+    else
+      'Archivar'
+    end
   end
 end
