@@ -1,4 +1,15 @@
 es:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              blank: 'La contraseña está vacía'
+              too_short: 'Muy corta la contraseña'
+            email:
+              invalid: 'No es un email válido'
+              taken: 'Ya está en uso el email'
   devise:
     confirmations:
       confirmed: Tu cuenta ha sido confirmada satisfactoriamente.

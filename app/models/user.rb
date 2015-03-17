@@ -25,8 +25,9 @@ class User < ActiveRecord::Base
         self.auth_token = SecureRandom.hex
         break if !User.exists?(auth_token: self.auth_token)
       end
-      self.save!
+      self.save
     end
+    self.auth_token
   end
 
 end

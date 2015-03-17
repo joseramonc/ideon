@@ -6,7 +6,7 @@
 
 All requests are authenticated
 
-### List all notes
+### List all notes (of authorized user)
 
     curl -H "Authorization: 26157f9b236b9bc23ccfed01200fb725" http://104.131.189.224/api/notes
 
