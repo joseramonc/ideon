@@ -15,7 +15,7 @@ module NotesHelper
   	end
   end
 
-  def texto(note)
+  def label(note)
   	if note.deleted
   		'Reestablecer'
   	else

@@ -35,7 +35,7 @@
         <td><%= note.status %></td>
         <td><%= link_to fa_icon('search', text: 'Ver'), note %></td>
         <td><%= link_to fa_icon('pencil', text: 'Editar'), edit_note_path(note) %></td>
-        <td id="deleted-note-<%= note.id %>"><%= link_to fa_icon(deleted_icon(note), text: texto(note)), toggle_deleted_note_path(note), method: :put, data: { confirm: 'Estas seguro?' } %></td>
+        <td id="deleted-note-<%= note.id %>"><%= link_to fa_icon(deleted_icon(note), text: label(note)), toggle_deleted_note_path(note), method: :put, data: { confirm: 'Estas seguro?' } %></td>
         <td><%= link_to fa_icon('trash-o', text: 'Borrar Permanentemente'), note, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
       </tr>
     <% end %>
