@@ -89,6 +89,12 @@ class NotesController < ApplicationController
     end
   end
 
+  def move_to_position
+    note = Note.find(params[:id])
+
+    note.move_to_position(params[:position].to_i)
+    render json: { status: :ok }
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

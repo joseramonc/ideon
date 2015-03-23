@@ -24,6 +24,7 @@
 <table class="table table-hover table-stripped">
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Body</th>
       <th>Favorite</th>
@@ -32,9 +33,13 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="sortable">
     <% @notes.each do |note| %>
-      <tr>
+      <tr
+        data-id="<%= note.id %>"
+        data-url="<%= move_to_position_note_path(note) %>"
+      >
+        <td class="draggable"><%= fa_icon('bars') %></td>
         <td><%= note.title %></td>
         <td><%= note.body %></td>
         <td id="favorite-note-<%= note.id %>"><%= link_to fa_icon(icon(note)), toggle_favorite_note_path(note), remote: true, method: :put %></td>

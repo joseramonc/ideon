@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :notes do
     member do
+      put 'move_to_position'
       put 'toggle_favorite'
       put 'toggle_deleted'
     end
