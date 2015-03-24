@@ -15,7 +15,7 @@ module NotesHelper
   	end
   end
 
-  def label(note)
+  def icon_text(note)
   	if note.deleted
   		'Reestablecer'
   	else
