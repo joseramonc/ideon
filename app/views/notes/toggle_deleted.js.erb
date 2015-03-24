@@ -1,0 +1,1 @@
+$('#deleted-note-' + '<%= @note.id %>').html('<%= escape_javascript(link_to(fa_icon(deleted_icon(@note), text: icon_text(@note)), toggle_deleted_note_path(@note), method: :put)) %>')

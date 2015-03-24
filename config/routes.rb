@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   root to: 'notes#index'
 
   resources :notes do
+
+    resources :checklist_items
+	
     member do
       put 'move_to_position'
       put 'toggle_favorite'
@@ -11,12 +14,13 @@ Rails.application.routes.draw do
     end
     collection do
       get 'favorites'
-      get 'deleted'
+      get 'deleted'     
     end
   end
 
   resources :tags
-
+  
+ 
   namespace :api, defaults: {format: :json} do
     resources :notes, only: [:index, :show, :create, :update, :destroy] do
       resources :checklist_items, only: [:index, :show, :create, :update, :destroy]
