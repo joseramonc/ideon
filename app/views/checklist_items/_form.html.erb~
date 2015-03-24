@@ -1,0 +1,15 @@
+<%= form_for(@note, builder: IdeonFormBuilder) do |f| %>
+  <%= render 'shared/errors', object: @note %>
+
+  <%= f.container do %>
+    <%= f.label_text_field :description %>
+  <% end %>
+
+  <%= f.container do %>
+    <%= f.label_text_area :body %>
+  <% end %>
+
+  <%= f.check_box :checked %>
+
+  <%= f.submit %>
+<% end %>
