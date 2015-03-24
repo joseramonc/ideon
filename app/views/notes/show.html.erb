@@ -18,39 +18,33 @@
 </p>
 
 <p>
-	<strong>Elementos de la lista</strong>
-	<% @note.checklist_items.each do |checklist_item| %>
-	  	<p>
-	    	Descripcion:
-	    	<%= checklist_item.description %>
-	  	</p> 
-	  	<p>
-	    	Checked:
-	    	<%= checklist_item.checked %>
-	  	</p>
-	  	<p>
-	  		<%= link_to fa_icon('trash-o', text: 'Borrar Permanentemente'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
-	  	</p>
-	<% end %>
+  <strong>Elementos de la lista</strong>
+  <ul>
+    <% @note.checklist_items.each do |checklist_item| %>
+        <li>
+          <%= checklist_item.description %>
+          <%= fa_icon(checklist_item.fa_checked) %>
+          <%= link_to fa_icon('trash-o', text: 'Eliminar item'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
+        </li>
+    <% end %>
+  </ul>
 </p>
 
 <p>
-	<strong>Agregar Elemento en la lista </strong>
-	<%= form_for([@note, @note.checklist_items.build]) do |f| %>
-		<p>
-			<%= f.label :description %><br>
-			<%= f.text_field :description %>
-			<%= f.check_box :checked %>
-			<%= label_tag(:checked, "Checked") %>
-
-		</p>
-		<p>
-			<%= f.submit %>
-		</p>
-	<% end %>
+  <strong>Agregar Elemento en la lista </strong>
+  <%= form_for([@note, @note.checklist_items.build], html: { class: 'form-inline' }) do |f| %>
+      <div class="form-group">
+        <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
+      </div>
+      <div class="checkbox">
+        <%= f.check_box :checked %>
+      </div>
+      <%= label_tag(:checked, 'Finalizada') %>
+      <%= f.submit 'Crear', class: 'btn btn-success' %>
+    </p>
+  <% end %>
 
 </p>
 
 <%= link_to 'Editar', edit_note_path(@note), class: 'btn btn-info' %>
 <%= link_to 'Todas las notas', notes_path, class: 'btn btn-primary' %>
-
