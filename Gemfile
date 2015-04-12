@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-# Use sqlite3 as the database for Active Record
+# Use mysql as the database for Active Record
 gem 'mysql2'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -12,6 +12,7 @@ gem 'mysql2'
 gem 'jbuilder', '~> 2.0'
 
 gem 'devise', '3.4.1'
+gem 'paperclip', '~> 4.2'
 
 # assets
 gem 'jquery-rails'

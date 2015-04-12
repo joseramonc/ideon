@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  file: 
+  note_id: 
+
+two:
+  file: 
+  note_id: 

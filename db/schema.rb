@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323150203) do
+ActiveRecord::Schema.define(version: 20150412003514) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "file_file_name",    limit: 255
+    t.string   "file_content_type", limit: 255
+    t.integer  "file_file_size",    limit: 4
+    t.datetime "file_updated_at"
+    t.integer  "note_id",           limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "assets", ["note_id"], name: "index_assets_on_note_id", using: :btree
 
   create_table "checklist_items", force: :cascade do |t|
     t.string   "description", limit: 255
@@ -71,5 +83,6 @@ ActiveRecord::Schema.define(version: 20150323150203) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "assets", "notes"
   add_foreign_key "checklist_items", "notes"
 end

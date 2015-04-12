@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     resources :notes, only: [:index, :show, :create, :update, :destroy] do
       resources :checklist_items, only: [:index, :show, :create, :update, :destroy]
+      resources :assets, only: [:index, :show, :create, :destroy]
     end
     resources :tags, only: [:index, :create, :update, :destroy]
     resource :user, only: [:create, :update, :destroy]
