@@ -3,6 +3,7 @@ json.title        note.title
 json.body         note.body
 json.favorite     note.favorite
 json.deleted      note.deleted
+json.position     note.position
 json.tags do
   json.array!     note.tags, partial: 'api/tags/tag', as: :tag
 end

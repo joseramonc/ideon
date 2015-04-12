@@ -36,7 +36,7 @@ class Api::NotesController < Api::ApplicationController
     end
 
     def note_params
-      params.require(:note).permit(:title, :body, :favorite, :deleted, { tag_ids: [] })
+      params.require(:note).permit(:title, :body, :favorite, :deleted, :position, { tag_ids: [] })
     end
 
 end
