@@ -1,0 +1,20 @@
+<%= form_for(@child_note, builder: IdeonFormBuilder) do |f| %>
+  <%= render 'shared/errors', object: @child_note %>
+
+  <% if @child_note.persisted? %>
+    <%= f.container do %>
+      <%= f.label_collection_select :note_id, @notes, :id, :title, { selected: @child_note.id } %>
+    <% end %>
+  <% else %>
+    <%= f.hidden_field :note_id, value: params[:note_id] %>
+  <% end %>
+
+  <%= f.container do %>
+    <%= f.label_text_field :title %>
+  <% end %>
+  <%= f.container do %>
+    <%= f.label_text_area :body %>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

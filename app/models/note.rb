@@ -6,4 +6,7 @@ class Note < ActiveRecord::Base
   has_many :assets, dependent: :destroy
 
   has_and_belongs_to_many :tags, join_table: 'note_tags'
+
+  has_many :child_notes
+
 end
