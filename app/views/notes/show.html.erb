@@ -28,23 +28,41 @@
         </li>
     <% end %>
   </ul>
-</p>
-
-<p>
-  <strong>Agregar Elemento en la lista </strong>
   <%= form_for([@note, @note.checklist_items.build], html: { class: 'form-inline' }) do |f| %>
       <div class="form-group">
         <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
       </div>
       <div class="checkbox">
-        <%= f.check_box :checked %>
+        <%= label_tag do %>
+          <%= f.check_box :checked %>
+          Finalizada
+        <% end %>
       </div>
-      <%= label_tag(:checked, 'Finalizada') %>
       <%= f.submit 'Crear', class: 'btn btn-success' %>
     </p>
   <% end %>
-
 </p>
+<p>
+  <strong>Notas Hijas:</strong>
+  <%= link_to 'Agregar', new_child_note_path(note_id: @note.id), class: 'btn btn-success' %>
+  <ul>
+    <% @note.child_notes.each do |child_note| %>
+      <li>
+        <%= link_to(
+            child_note.title,
+            "##{child_note.id}-#{child_note.title.parameterize}",
+            data: {
+              toggle: "modal",
+              target: "##{child_note.id}-#{child_note.title.parameterize}",
+            }
+          ) %> - <%= link_to fa_icon('pencil'), edit_child_note_path(child_note) %> | <%= link_to fa_icon('trash'), child_note_path(child_note), method: :delete %>
+      </li>
+      <%= render "modal", member: child_note %>
+    <% end %>
+  </ul>
+</p>
+
+
 
 <p>
   <strong>Archivos adjuntos</strong>

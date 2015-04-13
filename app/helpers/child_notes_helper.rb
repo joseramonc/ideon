@@ -1,0 +1,2 @@
+module ChildNotesHelper
+end

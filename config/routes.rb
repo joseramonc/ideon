@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :child_notes, except: [:index]
+
   devise_for :users
   root to: 'notes#index'
 
@@ -15,6 +17,7 @@ Rails.application.routes.draw do
     end
     collection do
       get 'favorites'
+      get 'deleted'
     end
   end
 

@@ -8,6 +8,14 @@ class IdeonFormBuilder < ActionView::Helpers::FormBuilder
     label = label(attribute) + text_field(attribute, options)
   end
 
+  def label_collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
+    html_options = {
+      class: 'form-control'
+    }.merge!(html_options)
+
+    label = label(attribute) + collection_select(attribute, collection, value_method, text_method, options, html_options)
+  end
+
   def label_email_field(attribute, options={})
     options = {
       class: 'form-control'

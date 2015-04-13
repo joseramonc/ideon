@@ -1,0 +1,17 @@
+<div class="modal fade" id="<%= "#{member.id}-#{member.title.parameterize}" %>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= member.title %></h4>
+      </div>
+      <div class="modal-body">
+        <%= member.body %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <%= link_to "Editar", edit_child_note_path(member), class: "btn btn-primary" %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

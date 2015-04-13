@@ -9,4 +9,7 @@ class Note < ActiveRecord::Base
   accepts_nested_attributes_for :assets, allow_destroy: true
 
   has_and_belongs_to_many :tags, join_table: 'note_tags'
+
+  has_many :child_notes
+
 end
