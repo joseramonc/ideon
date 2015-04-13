@@ -11,10 +11,11 @@ Rails.application.routes.draw do
       put 'move_to_position'
       put 'toggle_favorite'
       put 'toggle_deleted'
+      put 'delete_assets'
     end
     collection do
       get 'favorites'
-      get 'deleted'     
+      get 'deleted' 
     end
   end
 

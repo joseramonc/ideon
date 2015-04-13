@@ -96,6 +96,13 @@ class NotesController < ApplicationController
     render json: { status: :ok }
   end
 
+  def delete_assets
+    @note = Note.find(params[:id])
+    @note.assets = nil
+    @note.save
+    redirect_to notes_url, notice: 'Note was successfully updated.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_note
@@ -110,7 +117,8 @@ class NotesController < ApplicationController
         :body,
         :favorite,
         :status,
-        :deleted
+        :deleted,
+        assets_attributes: [:attachment]
       )
     end
 

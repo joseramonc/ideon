@@ -20,5 +20,8 @@
       <%= "#{checkbox} #{builder.text} #{icon}".html_safe %>
     <% end %>
   <% end %>
+
+  <%= f.file_field :assets %><br />
+
   <%= f.submit %>
 <% end %>
