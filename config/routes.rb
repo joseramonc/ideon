@@ -6,22 +6,21 @@ Rails.application.routes.draw do
   resources :notes do
 
     resources :checklist_items
-	
+
     member do
       put 'move_to_position'
       put 'toggle_favorite'
       put 'toggle_deleted'
-      put 'delete_assets'
+      put 'delete_asset'
     end
     collection do
       get 'favorites'
-      get 'deleted' 
     end
   end
 
   resources :tags
-  
- 
+
+
   namespace :api, defaults: {format: :json} do
     resources :notes, only: [:index, :show, :create, :update, :destroy] do
       resources :checklist_items, only: [:index, :show, :create, :update, :destroy]

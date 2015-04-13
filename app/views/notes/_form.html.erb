@@ -21,7 +21,26 @@
     <% end %>
   <% end %>
 
-  <%= f.file_field :assets %><br />
+  <div id="assets-container">
+    <%= f.fields_for :assets, :assets_attributes do |fa| %>
+      <%= f.container do %>
+        <%= fa.hidden_field :id %>
 
+        <div class="row">
+          <div class="col-xs-1">
+            <%= image_tag fa.object.file.url, height: '80px' %>
+          </div>
+          <div class="col-xs-1 col-xs-offset-1 col-md-offset-0">
+            <%= fa.check_box :_destroy, { checked: false } %>
+          </div>
+        </div>
+
+        <%= fa.file_field :file %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= link_to 'Agregar imagen', '#', class: "btn btn-primary", id: 'new-image-button' %>
+  <br>
+  <br>
   <%= f.submit %>
 <% end %>

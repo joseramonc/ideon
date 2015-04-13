@@ -37,6 +37,7 @@ class NotesController < ApplicationController
   # GET /notes/new
   def new
     @note = Note.new
+    @note.assets.build
   end
 
   # GET /notes/1/edit
@@ -96,11 +97,10 @@ class NotesController < ApplicationController
     render json: { status: :ok }
   end
 
-  def delete_assets
+  def delete_asset
     @note = Note.find(params[:id])
-    @note.assets = nil
-    @note.save
-    redirect_to notes_url, notice: 'Note was successfully updated.'
+    @note.assets.find_by_id(params[:asset_id]).destroy
+    redirect_to @note, notice: 'Note was successfully updated.'
   end
 
   private
@@ -118,7 +118,7 @@ class NotesController < ApplicationController
         :favorite,
         :status,
         :deleted,
-        assets_attributes: [:attachment]
+        { assets_attributes: [:id, :_destroy, :file] }
       )
     end
 

@@ -49,8 +49,11 @@
 <p>
   <strong>Archivos adjuntos</strong>
   <br />
-  <%= image_tag @note.assets %>
-  <%= link_to fa_icon('trash-o', text: 'Eliminar archivo'), delete_assets_note_path, method: :put, data: { confirm: 'Estas seguro?' } %>  
+  <% @note.assets.each do |asset| %>
+    <%= image_tag asset.file.url, height: '80px' %>
+    <%= link_to fa_icon('trash-o'), delete_asset_note_path(@note, asset_id: asset.id), method: :put, data: { confirm: 'Estas seguro?' } %>
+    <br>
+  <% end %>
 </p>
 
 <%= link_to 'Editar', edit_note_path(@note), class: 'btn btn-info' %>
