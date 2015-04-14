@@ -1,4 +1,4 @@
-<%= form_for(@note, builder: IdeonFormBuilder) do |f| %>
+<%= form_for(@note, builder: IdeonFormBuilder, html: { multipart: true } ) do |f| %>
   <%= render 'shared/errors', object: @note %>
 
   <%= f.container do %>
@@ -22,13 +22,13 @@
   <% end %>
 
   <div id="assets-container">
-    <%= f.fields_for :assets, :assets_attributes do |fa| %>
+    <%= f.fields_for :assets do |fa| %>
       <%= f.container do %>
         <%= fa.hidden_field :id %>
 
         <div class="row">
           <div class="col-xs-1">
-            <%= image_tag fa.object.file.url, height: '80px' %>
+            <%= image_tag fa.object.file.url, height: '80px', width: '80px' %>
           </div>
           <div class="col-xs-1 col-xs-offset-1 col-md-offset-0">
             <%= fa.check_box :_destroy, { checked: false } %>
