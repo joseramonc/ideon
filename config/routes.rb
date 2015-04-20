@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :notes do
 
     resources :checklist_items
+    resources :folds, only: [:create, :update, :destroy]
 
     member do
       put 'move_to_position'
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
       put 'toggle_deleted'
       put 'delete_asset'
     end
+
     collection do
       get 'favorites'
       get 'deleted'
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
   end
 
   resources :tags
+
+
 
   namespace :api, defaults: { format: :json } do
     resources :notes, only: [:index, :show, :create, :update, :destroy] do

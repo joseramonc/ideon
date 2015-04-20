@@ -1,78 +1,99 @@
+<div class="pull-right">
+  <%= link_to 'Editar', edit_note_path(@note), class: 'btn btn-info' %>
+  <%= link_to 'Todas las notas', notes_path, class: 'btn btn-primary' %>
+</div>
+
 <h2>
   <%= @note.title %>
 </h2>
 
-<strong>Body:</strong>
 <div class="well">
-  <%= @note.body %>
+  <%= @note.body.html_safe %>
 </div>
 
-<p>
-  <strong>Favorite:</strong>
-  <%= fa_icon(icon(@note), text: @note.favorite.to_s) %>
-</p>
+<h3>Favorite: <%= fa_icon(icon(@note), text: @note.favorite.to_s) %></h3>
 
-<p>
-  <strong>Status:</strong>
-  <%= @note.status %>
-</p>
+<h3>Status: <%= @note.status %></h3>
 
-<p>
-  <strong>Elementos de la lista</strong>
-  <ul>
-    <% @note.checklist_items.each do |checklist_item| %>
-        <li>
-          <%= checklist_item.description %>
-          <%= fa_icon(checklist_item.fa_checked) %>
-          <%= link_to fa_icon('trash-o', text: 'Eliminar item'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
-        </li>
-    <% end %>
-  </ul>
-  <%= form_for([@note, @note.checklist_items.build], html: { class: 'form-inline' }) do |f| %>
-      <div class="form-group">
-        <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
-      </div>
-      <div class="checkbox">
-        <%= label_tag do %>
-          <%= f.check_box :checked %>
-          Finalizada
-        <% end %>
-      </div>
-      <%= f.submit 'Crear', class: 'btn btn-success' %>
-    </p>
-  <% end %>
-</p>
-<p>
-  <strong>Notas Hijas:</strong>
-  <%= link_to 'Agregar', new_child_note_path(note_id: @note.id), class: 'btn btn-success' %>
-  <ul>
-    <% @note.child_notes.each do |child_note| %>
+<h3>Elementos de la lista</h3>
+<ul>
+  <% @note.checklist_items.each do |checklist_item| %>
       <li>
-        <%= link_to(
-            child_note.title,
-            "##{child_note.id}-#{child_note.title.parameterize}",
-            data: {
-              toggle: "modal",
-              target: "##{child_note.id}-#{child_note.title.parameterize}",
-            }
-          ) %> - <%= link_to fa_icon('pencil'), edit_child_note_path(child_note) %> | <%= link_to fa_icon('trash'), child_note_path(child_note), method: :delete %>
+        <%= checklist_item.description %>
+        <%= fa_icon(checklist_item.fa_checked) %>
+        <%= link_to fa_icon('trash-o', text: 'Eliminar item'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
       </li>
-      <%= render "modal", member: child_note %>
-    <% end %>
-  </ul>
-</p>
-
-
-
-<p>
-  <strong>Archivos adjuntos</strong>
-  <br />
-  <% @note.assets.each do |asset| %>
-    <%= image_tag asset.file.url, height: '80px' %>
-    <%= link_to fa_icon('trash-o'), delete_asset_note_path(@note, asset_id: asset.id), method: :put, data: { confirm: 'Estas seguro?' } %>
-    <br>
   <% end %>
-</p>
+</ul>
+<%= form_for([@note, @note.checklist_items.build], html: { class: 'form-inline' }) do |f| %>
+    <div class="form-group">
+      <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
+    </div>
+    <div class="checkbox">
+      <%= label_tag do %>
+        <%= f.check_box :checked %>
+        Finalizada
+      <% end %>
+    </div>
+    <%= f.submit 'Crear', class: 'btn btn-success' %>
+<% end %>
 
-<%= link_to 'Editar', edit_note_path(@note), class: 'btn btn-info' %>
-<%= link_to 'Todas las notas', notes_path, class: 'btn btn-primary' %>
+<h3>Notas Hijas:</h3>
+<%= link_to 'Agregar', new_child_note_path(note_id: @note.id), class: 'btn btn-success' %>
+<ul>
+  <% @note.child_notes.each do |child_note| %>
+    <li>
+      <%= link_to(
+          child_note.title,
+          "##{child_note.id}-#{child_note.title.parameterize}",
+          data: {
+            toggle: "modal",
+            target: "##{child_note.id}-#{child_note.title.parameterize}",
+          }
+        ) %> - <%= link_to fa_icon('pencil'), edit_child_note_path(child_note) %> | <%= link_to fa_icon('trash'), child_note_path(child_note), method: :delete %>
+    </li>
+    <%= render "modal", member: child_note %>
+  <% end %>
+</ul>
+
+<h3>Archivos adjuntos</h3>
+<% @note.assets.each do |asset| %>
+  <div class="media">
+    <div class="media-left">
+      <a>
+        <%= image_tag asset.file.url, height: '90px', class: 'media-object img-circle', width: '90px' %>
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Eliminar </h4>
+      <%= link_to fa_icon('trash-o'), delete_asset_note_path(@note, asset_id: asset.id), method: :put, data: { confirm: 'Estas seguro?' } %>
+    </div>
+  </div>
+<% end %>
+
+<h3>Pliegues</h3>
+<% @note.folds.each do |fold| %>
+  <a data-toggle="collapse"
+      href="#fold-collapse-<%= fold.id %>"
+      aria-expanded="false"
+      aria-controls="collapseExample">
+    <%= fold.content.truncate(12) %> <%= fa_icon('eye') %>
+  </a>
+  <%= link_to [@note, fold], method: :delete do %>
+    <%= fa_icon('trash-o') %>
+  <% end %>
+  <div class="collapse" id="fold-collapse-<%= fold.id %>">
+    <div class="well fold-well"
+        data-note-id="<%= @note.id %>"
+        data-fold-id="<%= fold.id %>"
+        data-dirty="false"><%= fold.content %></div>
+  </div>
+  <br>
+<% end %>
+
+<%= form_for([@note, @note.folds.build], html: { class: 'form-inline' }) do |f| %>
+  <div class="form-group col-xs-7">
+    <%= f.text_area :content, placeholder: 'lorem ipsum', class: 'form-control', style: 'width: 100%;' %>
+  </div>
+  <%= f.submit 'Crear pliegue', class: 'btn btn-success' %>
+<% end %>
