@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :notes, only: [:index, :show, :create, :update, :destroy] do
       resources :checklist_items, only: [:index, :show, :create, :update, :destroy]
       resources :assets, only: [:index, :show, :create, :destroy]
+      resources :links, only: [:index, :create, :destroy]
+      resources :folds, only: [:index, :show, :create, :update, :destroy]
     end
     resources :tags, only: [:index, :create, :update, :destroy]
     resource :user, only: [:create, :update, :destroy]

@@ -2,6 +2,10 @@ class Note < ActiveRecord::Base
   include Sortable
   belongs_to :user
 
+  has_many :folds, dependent: :destroy
+  has_many :links
+  has_many :linked_notes, through: :links
+
   has_many :checklist_items, dependent: :destroy
 
   has_many :assets, dependent: :destroy
