@@ -97,3 +97,33 @@
   </div>
   <%= f.submit 'Crear pliegue', class: 'btn btn-success' %>
 <% end %>
+
+<br />
+<h3>Notas Vinculadas:</h3>
+<div class = "show-list">
+  <%= content_tag :button, :class => 'btn btn-success' do %>
+     Agregar
+  <% end %>
+</div> 
+<div class = "list"> 
+    <% @notes.each do |note| %>
+      <ul>  
+        <tr>
+          <td><%= note.id %></td>
+          <td><%= note.title %></td> 
+          <td>         
+            <%= link_to 'Agregar',new_link_path(note_id: @note.id, linked_note_id: note.id), class: 'btn btn-success' %>
+          </td> 
+        </tr>
+      </ul>
+    <% end %>
+   
+  
+  <br />
+  <div class = "hide-list">
+    <%= content_tag :button, :class => 'btn btn-danger' do %>
+       Cancelar
+    <% end %>
+  </div> 
+</div>  
+
