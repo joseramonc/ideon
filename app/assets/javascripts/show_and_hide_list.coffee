@@ -1,11 +1,12 @@
 hide_list = ->
   $('.list').hide()
 
-$(document).ready(hide_list)
+$(document).on('page:load', hide_list)
+
 $(document).on 'click', '.show-list', ->
-		$('.list').show();
+	$('.list').show();
 
 $(document).on 'click', '.hide-list', ->
-		$('.list').hide();
+	$('.list').hide();
 
 
