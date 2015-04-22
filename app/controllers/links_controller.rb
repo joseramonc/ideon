@@ -10,9 +10,7 @@ class LinksController < ApplicationController
   def create
     @note = Note.find(params[:note_id])
     @link = @note.links.create(link_params)
-    redirect_to note_path(@note)
-    
-    
+    redirect_to note_path(@note)    
   end
 
   def show
