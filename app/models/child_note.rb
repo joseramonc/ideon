@@ -1,7 +1,7 @@
-class ChildNote < ActiveRecord::Base
-  belongs_to :note
+class ChildNote < Note
+  belongs_to :parent, class_name: "Note"
 
   validates_presence_of :title
   validates_presence_of :body
-  validates_numericality_of :note_id
+  validates_presence_of :parent_id
 end

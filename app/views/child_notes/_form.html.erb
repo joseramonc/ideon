@@ -1,20 +1,54 @@
-<%= form_for(@child_note, builder: IdeonFormBuilder) do |f| %>
-  <%= render 'shared/errors', object: @child_note %>
+<%= form_for(@note, builder: IdeonFormBuilder, html: { multipart: true } ) do |f| %>
+  <%= render 'shared/errors', object: @note %>
 
-  <% if @child_note.persisted? %>
+  <% if @note.persisted? %>
     <%= f.container do %>
-      <%= f.label_collection_select :note_id, @notes, :id, :title, { selected: @child_note.id } %>
+      <%= f.label_collection_select :parent_id, current_user.notes, :id, :title, { selected: @note.id } %>
     <% end %>
   <% else %>
-    <%= f.hidden_field :note_id, value: params[:note_id] %>
+    <%= f.hidden_field :parent_id, value: params[:note_id] %>
   <% end %>
 
   <%= f.container do %>
     <%= f.label_text_field :title %>
   <% end %>
+
   <%= f.container do %>
     <%= f.label_text_area :body %>
   <% end %>
 
+  <%= f.check_box :favorite %>
+
+  <%= f.check_box :status %>
+
+  <%= collection_check_boxes :note, :tag_ids, @tags, :id, :name do |builder| %>
+    <%= builder.label(class: 'check_box') do %>
+      <% icon = content_tag(:i, nil, class: 'fa fa-tag') %>
+      <% checkbox = builder.check_box(class: 'check_box') %>
+      <%= "#{checkbox} #{builder.text} #{icon}".html_safe %>
+    <% end %>
+  <% end %>
+
+  <div id="assets-container">
+    <%= f.fields_for :assets do |fa| %>
+      <%= f.container do %>
+        <%= fa.hidden_field :id %>
+
+        <div class="row">
+          <div class="col-xs-1">
+            <%= image_tag fa.object.file.url, height: '80px', width: '80px' %>
+          </div>
+          <div class="col-xs-1 col-xs-offset-1 col-md-offset-0">
+            <%= fa.check_box :_destroy, { checked: false } %>
+          </div>
+        </div>
+
+        <%= fa.file_field :file %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= link_to 'Agregar imagen', '#', class: "btn btn-primary", id: 'new-image-button' %>
+  <br>
+  <br>
   <%= f.submit %>
 <% end %>

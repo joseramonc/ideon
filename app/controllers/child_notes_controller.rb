@@ -1,6 +1,6 @@
 class ChildNotesController < ApplicationController
   before_action :set_child_note, only: [:show, :edit, :update, :destroy]
-  before_action :set_notes, only: [:new, :create, :edit, :update]
+  before_action :set_notes_and_tags, only: [:new, :create, :edit, :update]
   # GET /child_notes
   # def index
   #   @child_notes = ChildNote.all
@@ -12,7 +12,7 @@ class ChildNotesController < ApplicationController
 
   # GET /child_notes/new
   def new
-    @child_note = ChildNote.new
+    @note = ChildNote.new
   end
 
   # GET /child_notes/1/edit
@@ -21,11 +21,11 @@ class ChildNotesController < ApplicationController
 
   # POST /child_notes
   def create
-    @child_note = ChildNote.new(child_note_params)
+    @note = ChildNote.new(child_note_params)
 
-    if @child_note.save
-      # @child_note.reload
-      redirect_to @child_note.note, notice: 'Se creo la nota.'
+    if @note.save
+      # @note.reload
+      redirect_to @note.parent, notice: 'Se creo la nota.'
     else
       render :new
     end
@@ -33,8 +33,8 @@ class ChildNotesController < ApplicationController
 
   # PATCH/PUT /child_notes/1
   def update
-    if @child_note.update(child_note_params)
-      redirect_to @child_note.note, notice: 'La nota se actualizo.'
+    if @note.update(child_note_params)
+      redirect_to @note.parent, notice: 'La nota se actualizo.'
     else
       render :edit
     end
@@ -42,23 +42,24 @@ class ChildNotesController < ApplicationController
 
   # DELETE /child_notes/1
   def destroy
-    note = @child_note.note
-    @child_note.destroy
+    note = @note.note
+    @note.destroy
     redirect_to note, notice: 'Se eliminó la nota/'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_child_note
-      @child_note = ChildNote.find(params[:id])
+      @note = ChildNote.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def child_note_params
-      params.require(:child_note).permit(:title, :body, :note_id)
+      params.require(:child_note).permit(:title, :body, :parent_id)
     end
 
-    def set_notes
+    def set_notes_and_tags
       @notes = current_user.notes
+      @tags = current_user.tags
     end
 end
