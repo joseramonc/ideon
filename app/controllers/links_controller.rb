@@ -8,13 +8,9 @@ class LinksController < ApplicationController
 
   #POST /link
   def create
-    #@note = Note.find(params[:note_id])
-    @link = Link.new(link_params)#@note.links.create(link_params)
-    if @link.save
-      redirect_to note_path(@note)
-    else
-      render 'error'
-    end
+    @note = Note.find(params[:note_id])
+    @link = @note.links.create(link_params)
+    redirect_to note_path(@note)
     
     
   end
@@ -28,15 +24,15 @@ class LinksController < ApplicationController
 
   # DELETE /link
   def destroy
+    @note = Note.find(params[:note_id])
+    @link = @note.links.find(params[:id])
     @link.destroy
-    redirect_to @note, notice: 'Se eliminó el vínculo'
+    redirect_to note_path(@note), notice: 'Se eliminó el vínculo'
   end
 
   private
 
     def set_link      
-      #@note = current_user.notes.find(params[:note_id])
-      #@link = @note.links.find(params[:id])
       @link = Link.find(params[:id])
     end
 

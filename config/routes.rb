@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :child_notes, except: [:index]
-  resources :links
+  #resources :links
 
   devise_for :users
   root to: 'notes#index'

@@ -100,24 +100,41 @@
 
 <br />
 <h3>Notas Vinculadas:</h3>
+<ul>
+  <% @note.links.each do |link| %>
+    <li>
+      <tr>
+        <td>
+          <a href="<%= link.linked_note_id %>"><%= link.linked_note_id %></a>
+        </td>
+        <td>
+          <%= link_to fa_icon('trash-o', text: 'Eliminar vinculo'), [link.note, link], method: :delete, data: { confirm: 'Estás seguro?' } %>
+        </td>  
+      </tr>    
+    </li>
+  <% end %>
+</ul>
 <div class = "show-list">
   <%= content_tag :button, :class => 'btn btn-success' do %>
-     Agregar
+     Agregar     
+  
   <% end %>
 </div> 
 <div class = "list"> 
+  <%= form_for([@note, @note.links.build], html: { class: 'form-inline' }) do |f| %> 
     <% @notes.each do |note| %>
       <ul>  
         <tr>
-          <td><%= note.id %></td>
+          <td><%= f.text_field :linked_note_id, :value => note.id %></td>
+          <td><%= hidden_field_tag :note_id, :value => @note.id %></td>
           <td><%= note.title %></td> 
           <td>         
-            <%= link_to 'Agregar',new_link_path(note_id: @note.id, linked_note_id: note.id), class: 'btn btn-success' %>
+            <%= f.submit 'Vincular', class: 'btn btn-success' %>
           </td> 
         </tr>
       </ul>
     <% end %>
-   
+   <% end %>
   
   <br />
   <div class = "hide-list">
