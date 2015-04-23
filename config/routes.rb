@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :child_notes, except: [:index]
+  #resources :links
 
   devise_for :users
   root to: 'notes#index'
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
 
     resources :checklist_items
     resources :folds, only: [:create, :update, :destroy]
+    resources :links
 
     member do
       put 'move_to_position'

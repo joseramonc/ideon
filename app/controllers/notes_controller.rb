@@ -31,7 +31,8 @@ class NotesController < ApplicationController
 
 
   # GET /notes/1
-  def show
+  def show     
+    @notes = current_user.notes.where.not(deleted: true, id: @note.id)
   end
 
   # GET /notes/new
@@ -47,7 +48,6 @@ class NotesController < ApplicationController
   # POST /notes
   def create
     @note = Note.new(note_params)
-
     @note.user_id = current_user.id
     if @note.save
       redirect_to @note, notice: 'Note was successfully created.'
@@ -71,7 +71,6 @@ class NotesController < ApplicationController
     redirect_to notes_url, notice: 'Note was successfully destroyed.'
   end
 
-
   # PUT /notes/1/toggle_favorite
   def toggle_favorite
     @note.toggle!(:favorite)
@@ -92,7 +91,6 @@ class NotesController < ApplicationController
 
   def move_to_position
     note = Note.find(params[:id])
-
     note.move_to_position(params[:position].to_i)
     render json: { status: :ok }
   end
