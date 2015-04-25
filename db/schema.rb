@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422141612) do
+ActiveRecord::Schema.define(version: 20150425171147) do
 
   create_table "assets", force: :cascade do |t|
     t.string   "file_file_name",    limit: 255
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150422141612) do
     t.boolean  "deleted",    limit: 1,     default: false
     t.integer  "position",   limit: 4
     t.string   "type",       limit: 255
-    t.integer  "parent_id",  limit: 4
+    t.integer  "parent_id",  limit: 4,     default: 0
   end
 
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree

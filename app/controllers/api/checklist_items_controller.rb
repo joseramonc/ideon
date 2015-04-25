@@ -3,7 +3,7 @@ class Api::ChecklistItemsController < Api::ApplicationController
   before_action :set_checklist_item, only: [:show, :update, :destroy]
 
   def index
-    @checklist_items = current_user.notes.find(params[:note_id]).checklist_items
+    @checklist_items = current_user.find_note_or_child_note(params[:note_id]).checklist_items
   end
 
   def show
@@ -32,7 +32,7 @@ class Api::ChecklistItemsController < Api::ApplicationController
   private
 
     def set_checklist_item
-      @checklist_item = current_user.notes.find(params[:note_id]).checklist_items.find(params[:id])
+      @checklist_item = current_user.find_note_or_child_note(params[:note_id]).checklist_items.find(params[:id])
     end
 
     def checklist_item_params

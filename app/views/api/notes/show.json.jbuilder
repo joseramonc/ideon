@@ -1,3 +1,3 @@
 json.note do
-  json.partial! @note, partial: 'api/notes/note', as: :note
+  json.partial! 'api/notes/note', note: @note
 end

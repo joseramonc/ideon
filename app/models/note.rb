@@ -1,9 +1,12 @@
 class Note < ActiveRecord::Base
   include Sortable
+  before_destroy :remove_linked
+
   belongs_to :user
 
   has_many :folds, dependent: :destroy
-  has_many :links
+
+  has_many :links, dependent: :destroy
   has_many :linked_notes, through: :links
 
   has_many :checklist_items, dependent: :destroy
@@ -14,5 +17,12 @@ class Note < ActiveRecord::Base
 
   has_and_belongs_to_many :tags, join_table: 'note_tags'
 
-  has_many :child_notes, class_name: "Note", foreign_key: 'parent_id'
+  has_many :child_notes, class_name: 'Note', foreign_key: 'parent_id', dependent: :destroy
+
+  private
+
+    def remove_linked
+      Link.where(linked_note: self.id).destroy_all
+    end
+
 end

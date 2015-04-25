@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :destroy]
-  #before_action :set_notes, only: [:new, :create, :edit, :update]
+  
 
   def new
     @link = Link.new
@@ -9,7 +9,10 @@ class LinksController < ApplicationController
   #POST /link
   def create
     @note = Note.find(params[:note_id])
-    @link = @note.links.create(link_params)
+    params[:link][:linked_note_id].delete('') # remove white element in params # => ['', '1', '3', ... ]
+    params[:link][:linked_note_id].each do |id|
+      @note.links.create(linked_note_id: id)
+    end
     redirect_to note_path(@note)    
   end
 

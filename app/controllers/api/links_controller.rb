@@ -3,7 +3,7 @@ class Api::LinksController < Api::ApplicationController
   before_action :set_link, only: [:destroy]
 
   def index
-    @links = current_user.notes.find(params[:note_id]).links
+    @links = current_user.find_note_or_child_note(params[:note_id]).links
   end
 
   def create
@@ -23,7 +23,7 @@ class Api::LinksController < Api::ApplicationController
   private
 
     def set_link
-      @link = current_user.notes.find(params[:note_id]).links.find(params[:id])
+      @link = current_user.find_note_or_child_note(params[:note_id]).links.find(params[:id])
     end
 
     def link_params
