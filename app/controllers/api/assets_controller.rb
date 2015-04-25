@@ -3,7 +3,7 @@ class Api::AssetsController < Api::ApplicationController
   before_action :set_asset, only: [:show, :destroy]
 
   def index
-    @assets = current_user.notes.find(params[:note_id]).assets
+    @assets = current_user.find_note_or_child_note(params[:note_id]).assets
   end
 
   def show
@@ -37,7 +37,7 @@ class Api::AssetsController < Api::ApplicationController
     end
 
     def set_asset
-      @asset = current_user.notes.find(params[:note_id]).assets.find(params[:id])
+      @asset = current_user.find_note_or_child_note(params[:note_id]).assets.find(params[:id])
     end
 
     def asset_params

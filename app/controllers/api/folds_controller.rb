@@ -3,7 +3,7 @@ class Api::FoldsController < Api::ApplicationController
   before_action :set_fold, only: [:show, :update, :destroy]
 
   def index
-    @folds = current_user.notes.find(params[:note_id]).folds
+    @folds = current_user.find_note_or_child_note(params[:note_id]).folds
   end
 
   def show
@@ -32,7 +32,7 @@ class Api::FoldsController < Api::ApplicationController
   private
 
     def set_fold
-      @fold = current_user.notes.find(params[:note_id]).folds.find(params[:id])
+      @fold = current_user.find_note_or_child_note(params[:note_id]).folds.find(params[:id])
     end
 
     def fold_params

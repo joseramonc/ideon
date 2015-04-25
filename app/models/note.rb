@@ -17,7 +17,7 @@ class Note < ActiveRecord::Base
 
   has_and_belongs_to_many :tags, join_table: 'note_tags'
 
-  has_many :child_notes, class_name: 'Note', foreign_key: 'parent_id'
+  has_many :child_notes, class_name: 'Note', foreign_key: 'parent_id', dependent: :destroy
 
   private
 
