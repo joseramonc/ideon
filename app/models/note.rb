@@ -19,6 +19,13 @@ class Note < ActiveRecord::Base
 
   has_many :child_notes, class_name: 'Note', foreign_key: 'parent_id', dependent: :destroy
 
+  scope :search, -> (search) do
+    where(
+      'title LIKE :search OR body LIKE :search',
+      search: "%#{search}%"
+    )  
+  end
+
   private
 
     def remove_linked

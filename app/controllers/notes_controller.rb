@@ -13,6 +13,7 @@ class NotesController < ApplicationController
   def index
     @notes = current_user.notes.where(deleted: false)
     filter_by_tag(params[:tag])
+    @notes = @notes.search(params[:search])
   end
 
   # GET /notes/favorites
@@ -31,7 +32,7 @@ class NotesController < ApplicationController
 
 
   # GET /notes/1
-  def show     
+  def show
     @notes = current_user.notes.where.not(deleted: true, id: @note.id)
   end
 

@@ -23,6 +23,19 @@
           <% end %>
         <% end %>
       </ul>
+      <% if current_user %>
+        <%= form_tag notes_path, method: :get, class: 'navbar-form navbar-left' do %>
+          <div class="form-group">
+            <%= text_field_tag(
+                :search,
+                params[:search],
+                placeholder: "Search",
+                class: "form-control"
+            ) %>
+          </div>
+          <%= submit_tag 'Ir!', class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
           <li class="<%= active_path(:devise_registrations) %>">
