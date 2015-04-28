@@ -11,7 +11,7 @@ module NotesHelper
     if note.deleted
       'check'
     else
-      'close'
+      'trash-o'
     end
   end
 
@@ -20,6 +20,14 @@ module NotesHelper
       'Reestablecer'
     else
       'Eliminar'
+    end
+  end
+
+  def rows_for(note)
+    if note.body
+      note.body.length / 150 + 4
+    else
+      4
     end
   end
 end

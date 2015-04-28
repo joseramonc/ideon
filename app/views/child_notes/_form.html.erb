@@ -10,16 +10,14 @@
   <% end %>
 
   <%= f.container do %>
-    <%= f.label_text_field :title %>
+    <%= f.text_field :title, placeholder: 'Titulo', class: 'form-control' %>
   <% end %>
 
   <%= f.container do %>
-    <%= f.label_text_area :body %>
+    <%= f.text_area :body, rows: rows_for(@note), placeholder: 'Lorem ipsum dolor sit amec...', class: 'form-control' %>
   <% end %>
 
   <%= f.check_box :favorite %>
-
-  <%= f.check_box :status %>
 
   <%= collection_check_boxes :note, :tag_ids, @tags, :id, :name do |builder| %>
     <%= builder.label(class: 'check_box') do %>

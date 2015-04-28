@@ -8,6 +8,9 @@ class ChildNotesController < ApplicationController
 
   # GET /child_notes/1
   def show
+    @note = @note.becomes(Note)
+    @notes = current_user.notes
+    render 'notes/show'
   end
 
   # GET /child_notes/new
@@ -25,7 +28,7 @@ class ChildNotesController < ApplicationController
 
     if @note.save
       # @note.reload
-      redirect_to @note.parent, notice: 'Se creo la nota.'
+      redirect_to @note.parent, notice: 'Se ha creado la nota.'
     else
       render :new
     end
@@ -55,7 +58,13 @@ class ChildNotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def child_note_params
-      params.require(:child_note).permit(:title, :body, :parent_id)
+      params.require(:child_note).permit(
+        :title,
+        :body,
+        :favorite,
+        :parent_id,
+        { assets_attributes: [:id, :_destroy, :file] }
+      )
     end
 
     def set_notes_and_tags

@@ -1,5 +1,12 @@
 es:
   activerecord:
+    attributes:
+      note:
+        title: 'Título'
+        body: 'Cuerpo'
+        favorite: 'Favorita?'
+      tag:
+        name: 'Nombre'
     errors:
       models:
         user:
@@ -10,6 +17,9 @@ es:
             email:
               invalid: 'No es un email válido'
               taken: 'Ya está en uso el email'
+        note:
+          attributes:
+            title: 'Título'
   devise:
     confirmations:
       confirmed: Tu cuenta ha sido confirmada satisfactoriamente.

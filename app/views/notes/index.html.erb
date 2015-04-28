@@ -1,56 +1,68 @@
-<h1>Mostrando Notas</h1>
+<h1>Notas</h1>
 <div class="row">
+  <% if params[:action] != 'index' || params[:search].present? %>
+    <%= link_to fa_icon('undo', text: 'Regresar'), notes_path, class: 'btn btn-warning btn-lg' %>
+  <% end %>
   <%= link_to fa_icon('plus', text: 'Nueva Nota'), new_note_path, class: 'btn btn-primary btn-lg pull-right' %>
-  <%= link_to fa_icon('star', text: 'Filtrar favoritas'), favorites_notes_path, class: 'btn btn-info btn-lg pull-right' %>
-  <%= link_to fa_icon('trash-o', text: 'Filtrar Archivadas'), deleted_notes_path, class: 'btn btn-info btn-lg pull-right' %>
+  <% if params[:action] != 'favorites' %>
+    <%= link_to fa_icon('star', text: 'Filtrar favoritas'), favorites_notes_path, class: 'btn btn-info btn-lg pull-right' %>
+  <% end %>
+  <% if params[:action] != 'deleted' %>
+    <%= link_to fa_icon('trash-o', text: 'Notas Archivadas'), deleted_notes_path, class: 'btn btn-info btn-lg pull-right' %>
+  <% end %>
 </div>
 
 <div class="row">
-  <%= select_tag(
-    'Mostrar etiqueta',
-    options_from_collection_for_select(
-      @tags,
-      :id,
-      :name,
-      params[:tag]
-    ),
-    include_blank: 'Todas',
-    id: 'tag-select',
-    class: 'form-control',
-    style: 'margin-top: 10px;'
-  ) %>
+  <% if @notes.count > 0 %>
+    <%= select_tag(
+      'Mostrar etiqueta',
+      options_from_collection_for_select(
+        @tags,
+        :id,
+        :name,
+        params[:tag]
+      ),
+      include_blank: 'Todas',
+      id: 'tag-select',
+      class: 'form-control',
+      style: 'margin-top: 10px;'
+    ) %>
+  <% end %>
 </div>
 
-<table class="table table-hover table-stripped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Favorite</th>
-      <th>Status</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-
-  <tbody id="sortable">
-    <% @notes.each do |note| %>
-      <tr
-        data-id="<%= note.id %>"
-        data-url="<%= move_to_position_note_path(note) %>"
-      >
-        <td class="draggable"><%= fa_icon('bars') %></td>
-        <td><%= note.title %></td>
-        <td><%= note.body %></td>
-        <td id="favorite-note-<%= note.id %>"><%= link_to fa_icon(icon(note)), toggle_favorite_note_path(note), remote: true, method: :put %></td>
-        <td><%= note.status %></td>
-        <td><%= link_to fa_icon('search', text: 'Ver'), note %></td>
-        <td><%= link_to fa_icon('pencil', text: 'Editar'), edit_note_path(note) %></td>
-        <td id="deleted-note-<%= note.id %>"><%= link_to fa_icon(deleted_icon(note), text: icon_text(note)), toggle_deleted_note_path(note), method: :put, data: { confirm: 'Estas seguro?' } %></td>
-        <td><%= link_to fa_icon('trash-o', text: 'Borrar Permanentemente'), note, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
-      </tr>
+<% if @notes.count > 0 %>
+  <table class="table table-hover table-stripped">
+    <tbody id="sortable">
+      <% @notes.each do |note| %>
+        <tr
+          data-id="<%= note.id %>"
+          data-url="<%= move_to_position_note_path(note) %>"
+        >
+          <td class="draggable"><%= fa_icon('bars') %></td>
+          <td><%= note.title.truncate(16) %></td>
+          <td><%= note.body.truncate(45) %></td>
+          <td style="width: 30px;" id="favorite-note-<%= note.id %>"><%= link_to fa_icon(icon(note)), toggle_favorite_note_path(note), remote: true, method: :put %></td>
+          <td style="width: 30px;"><%= link_to fa_icon('search'), note %></td>
+          <td style="width: 30px;"><%= link_to fa_icon('pencil'), edit_note_path(note) %></td>
+          <td style="width: 30px;" id="deleted-note-<%= note.id %>"><%= link_to fa_icon(deleted_icon(note)), toggle_deleted_note_path(note), method: :put, data: { confirm: 'Archivar?' } %></td>
+          <% if note.deleted %>
+            <td style="width: 30px;"><%= link_to fa_icon('times'), note, method: :delete, data: { confirm: 'Borrar permanentemente?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="hero text-center">Aún no hay notas en esta sección</p>
+  <p class="hero text-center">
+    <% if params[:search].present? %>
+      No hay notas que coincidan con su búsqueda.
+    <% elsif params[:action] == 'index' %>
+      Para agregar una nueva nota haz click en el botón "Nuevo"
+    <% elsif params[:action] == 'deleted' %>
+      Para archivar una nota, haz clik en el botón eliminar de las notas.
+    <% elsif params[:action] == 'favorites' %>
+      Para marcar una nota como favorita haz click en el botón de favorita en la nota.
     <% end %>
-  </tbody>
-</table>
-
-<br>
+  </p>
+<% end %>

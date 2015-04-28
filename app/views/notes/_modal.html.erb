@@ -3,10 +3,29 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><%= member.title %></h4>
+        <h4 class="modal-title"><%= member.title %> <%= fa_icon(icon(@note)) %></h4>
       </div>
       <div class="modal-body">
-        <%= member.body %>
+        <p class="lead">
+          <%= member.body %>
+        </p>
+
+        <% member.assets.each do |asset| %>
+          <div class="media">
+            <div class="media-left">
+              <a>
+                <%= image_tag asset.file.url, height: '90px', class: 'media-object img-circle', width: '90px' %>
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Eliminar </h4>
+              <%= link_to fa_icon('trash-o'), delete_asset_note_path(@note, asset_id: asset.id), method: :put, data: { confirm: 'Estas seguro?' } %>
+            </div>
+          </div>
+        <% end %>
+        <% if member.assets.count == 0 %>
+          No tiene archivos adjuntos aún, haz click <%= link_to 'aquí', edit_child_note_path(member) %> para agregar archivos
+        <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

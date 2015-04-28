@@ -12,7 +12,6 @@ class Note < ActiveRecord::Base
   has_many :checklist_items, dependent: :destroy
 
   has_many :assets, dependent: :destroy
-
   accepts_nested_attributes_for :assets, allow_destroy: true
 
   has_and_belongs_to_many :tags, join_table: 'note_tags'
@@ -23,7 +22,7 @@ class Note < ActiveRecord::Base
     where(
       'title LIKE :search OR body LIKE :search',
       search: "%#{search}%"
-    )  
+    )
   end
 
   private

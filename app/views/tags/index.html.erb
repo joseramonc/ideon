@@ -1,25 +1,21 @@
-<h1>Mostrando Etiquetas</h1>
+<h1>Etiquetas</h1>
 <%= link_to fa_icon('plus', text: 'Nueva etiqueta'), new_tag_path, class: 'btn btn-primary btn-lg pull-right' %>
 
-<table class="table table-hover table-stripped">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% if @tags.count > 0 %>
+  <table class="table table-hover table-stripped">
 
-  <tbody>
-    <% @tags.each do |tag| %>
-      <tr>
-        <td><%= tag.name %></td>
-        <td><%= link_to fa_icon('search', text: 'Ver'), tag %></td>
-        <td><%= link_to fa_icon('pencil', text: 'Editar'), edit_tag_path(tag) %></td>
-        <td><%= link_to fa_icon('trash-o', text: 'Borrar'), tag, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+    <tbody>
+      <% @tags.each do |tag| %>
+        <tr>
+          <td><%= tag.name %></td>
+          <td style="width: 30px;"><%= link_to fa_icon('search'), tag %></td>
+          <td style="width: 30px;"><%= link_to fa_icon('pencil'), edit_tag_path(tag) %></td>
+          <td style="width: 30px;"><%= link_to fa_icon('trash-o'), tag, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="lead text-center">No has creado etiquetas.</p>
+  <p class="lead text-center">Para crera una etiqueta haz click en el botón "Nuevo"</p>
+<% end %>

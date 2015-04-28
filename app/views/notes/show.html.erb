@@ -4,36 +4,56 @@
 </div>
 
 <h2>
-  <%= @note.title %>
+  <%= @note.title %> <%= fa_icon(icon(@note)) %>
 </h2>
 
 <div class="well">
   <%= @note.body.html_safe %>
 </div>
 
-<h3>Favorite: <%= fa_icon(icon(@note), text: @note.favorite.to_s) %></h3>
-
-<h3>Status: <%= @note.status %></h3>
-
-<h3>Elementos de la lista</h3>
-<ul>
-  <% @note.checklist_items.each do |checklist_item| %>
-      <li>
-        <%= checklist_item.description %>
-        <%= fa_icon(checklist_item.fa_checked) %>
-        <%= link_to fa_icon('trash-o', text: 'Eliminar item'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
-      </li>
+<h3>Pliegues</h3>
+<% @note.folds.each do |fold| %>
+  <a data-toggle="collapse"
+      href="#fold-collapse-<%= fold.id %>"
+      aria-expanded="false"
+      aria-controls="collapseExample">
+    <%= fold.content.truncate(12) %> <%= fa_icon('eye') %>
+  </a>
+  <%= link_to [@note, fold], method: :delete do %>
+    <%= fa_icon('trash-o') %>
   <% end %>
-</ul>
+  <div class="collapse" id="fold-collapse-<%= fold.id %>">
+    <div class="well fold-well"
+        data-note-id="<%= @note.id %>"
+        data-fold-id="<%= fold.id %>"
+        data-dirty="false"><%= fold.content %></div>
+  </div>
+  <br>
+<% end %>
+
+<%= form_for([@note, @note.folds.build], html: { class: 'form-inline' }) do |f| %>
+  <div class="form-group col-xs-7">
+    <%= f.text_area :content, placeholder: 'lorem ipsum', class: 'form-control', style: 'width: 100%;' %>
+  </div>
+  <%= f.submit 'Crear pliegue', class: 'btn btn-success' %>
+<% end %>
+<br>
+<h3>Elementos de la lista</h3>
+<% @note.checklist_items.each do |checklist_item| %>
+  <div>
+    <%= fa_icon(checklist_item.fa_checked) %>
+    <%= checklist_item.description %>
+    <%= link_to fa_icon('times'), [checklist_item.note, checklist_item], method: :delete, data: { confirm: 'Estás seguro?' } %>
+  </div>
+<% end %>
 <%= form_for([@note, @note.checklist_items.build], html: { class: 'form-inline' }) do |f| %>
-    <div class="form-group">
-      <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
-    </div>
     <div class="checkbox">
       <%= label_tag do %>
         <%= f.check_box :checked %>
-        Finalizada
       <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.text_field :description, placeholder: 'Darle de comer al perro', class: 'form-control' %>
     </div>
     <%= f.submit 'Crear', class: 'btn btn-success' %>
 <% end %>
@@ -70,57 +90,22 @@
     </div>
   </div>
 <% end %>
-
-<h3>Pliegues</h3>
-<% @note.folds.each do |fold| %>
-  <a data-toggle="collapse"
-      href="#fold-collapse-<%= fold.id %>"
-      aria-expanded="false"
-      aria-controls="collapseExample">
-    <%= fold.content.truncate(12) %> <%= fa_icon('eye') %>
-  </a>
-  <%= link_to [@note, fold], method: :delete do %>
-    <%= fa_icon('trash-o') %>
-  <% end %>
-  <div class="collapse" id="fold-collapse-<%= fold.id %>">
-    <div class="well fold-well"
-        data-note-id="<%= @note.id %>"
-        data-fold-id="<%= fold.id %>"
-        data-dirty="false"><%= fold.content %></div>
-  </div>
-  <br>
+<% if @note.assets.count == 0 %>
+  <p class="lead">No tiene archivos adjuntos aún, haz click <%= link_to 'aquí', edit_note_path(@note) %> para agregar archivos</p>
 <% end %>
 
-<%= form_for([@note, @note.folds.build], html: { class: 'form-inline' }) do |f| %>
-  <div class="form-group col-xs-7">
-    <%= f.text_area :content, placeholder: 'lorem ipsum', class: 'form-control', style: 'width: 100%;' %>
-  </div>
-  <%= f.submit 'Crear pliegue', class: 'btn btn-success' %>
-<% end %>
 
-<br />
 <h3>Notas Vinculadas:</h3>
 <ul>
   <% @note.links.each do |link| %>
     <li>
-      <tr>
-        <td>
-          <a href="<%= link.linked_note_id %>"><%= link.linked_note_id %></a>
-        </td>
-        <td>
-          <%= link_to fa_icon('trash-o', text: 'Eliminar vinculo'), [link.note, link], method: :delete, data: { confirm: 'Estás seguro?' } %>
-        </td>  
-      </tr>    
+      <%= link_to link.linked_note.title, link.linked_note %>
+      <%= link_to fa_icon('trash-o', text: 'Eliminar vinculo'), [link.note, link], method: :delete, data: { confirm: 'Estás seguro?' } %>
     </li>
   <% end %>
 </ul>
-<div class = "show-list">
-  <%= content_tag :button, :class => 'btn btn-success' do %>
-     Agregar   
-  <% end %>
-</div> 
-<div class = "list"> 
-  <%= form_for([@note, @note.links.build], html: { class: 'form-inline' }) do |f| %> 
+<div class = "list">
+  <%= form_for([@note, @note.links.build], html: { class: 'form-inline' }) do |f| %>
     <%= collection_check_boxes :link, :linked_note_id, @notes, :id, :title do |builder| %>
       <%= builder.label(class: 'check_box') do %>
         <% checkbox = builder.check_box(class: 'check_box') %>
@@ -130,12 +115,6 @@
     <%= f.submit 'Vincular', class: 'btn btn-success' %>
   <% end %>
 </div>
-  
-  <br />
-  <div class = "hide-list">
-    <%= content_tag :button, :class => 'btn btn-danger' do %>
-       Cancelar
-    <% end %>
-  </div> 
-</div>  
 
+<br>
+<%= link_to "Regresar", :back, class: 'btn btn-danger' %>

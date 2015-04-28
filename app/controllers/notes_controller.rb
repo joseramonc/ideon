@@ -39,7 +39,6 @@ class NotesController < ApplicationController
   # GET /notes/new
   def new
     @note = Note.new
-    @note.assets.build
   end
 
   # GET /notes/1/edit
@@ -51,7 +50,7 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.user_id = current_user.id
     if @note.save
-      redirect_to @note, notice: 'Note was successfully created.'
+      redirect_to @note, notice: 'La nota fue creada correctamente.'
     else
       render :new
     end
@@ -60,7 +59,7 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1
   def update
     if @note.update(note_params)
-      redirect_to @note, notice: 'Note was successfully updated.'
+      redirect_to @note, notice: 'La nota fue actualizada correctamente.'
     else
       render :edit
     end
@@ -69,14 +68,14 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   def destroy
     @note.destroy
-    redirect_to notes_url, notice: 'Note was successfully destroyed.'
+    redirect_to notes_url, notice: 'La nota fue borrada correctamente.'
   end
 
   # PUT /notes/1/toggle_favorite
   def toggle_favorite
     @note.toggle!(:favorite)
     respond_to do |format|
-      format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+      format.html { redirect_to @note, notice: 'La nota fue actualizada correctamente.' }
       format.js { render }
     end
   end
@@ -85,7 +84,7 @@ class NotesController < ApplicationController
   def toggle_deleted
     @note.toggle!(:deleted)
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was successfully updated.' }
+      format.html { redirect_to notes_url, notice: 'La nota fue actualizada correctamente.' }
       format.js { render }
     end
   end
@@ -99,7 +98,7 @@ class NotesController < ApplicationController
   def delete_asset
     @note = Note.find(params[:id])
     @note.assets.find_by_id(params[:asset_id]).destroy
-    redirect_to @note, notice: 'Note was successfully updated.'
+    redirect_to @note, notice: 'La nota fue actualizada correctamente.'
   end
 
   private
@@ -115,7 +114,6 @@ class NotesController < ApplicationController
         :title,
         :body,
         :favorite,
-        :status,
         :deleted,
         { assets_attributes: [:id, :_destroy, :file] }
       )

@@ -31,7 +31,7 @@ class TagsController < ApplicationController
     @tag.user = current_user
 
     if @tag.save
-      redirect_to @tag, notice: 'Tag was successfully created.'
+      redirect_to tags_path, notice: 'La etiqueta fue creada correctamente.'
     else
       render :new
     end
@@ -40,7 +40,7 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1
   def update
     if @tag.update(tag_params)
-      redirect_to @tag, notice: 'Tag was successfully updated.'
+      redirect_to @tag, notice: 'La etiqueta fue actualizada correctamente.'
     else
       render :edit
     end
@@ -49,7 +49,7 @@ class TagsController < ApplicationController
   # DELETE /tags/1
   def destroy
     @tag.destroy
-    redirect_to tags_url, notice: 'Tag was successfully destroyed.'
+    redirect_to tags_url, notice: 'La etiqueta fue borrada correctamente.'
   end
 
   private

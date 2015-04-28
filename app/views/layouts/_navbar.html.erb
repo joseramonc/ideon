@@ -37,20 +37,17 @@
         <% end %>
       <% end %>
       <ul class="nav navbar-nav navbar-right">
-        <% if current_user %>
-          <li class="<%= active_path(:devise_registrations) %>">
-            <%= link_to "Mi cuenta", edit_user_registration_path %>
-          </li>
-        <% end %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ayuda <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <% if current_user %>
-              <li><a href="#">Configuración</a></li>
+              <li>
+                <%= link_to "Mi cuenta", edit_user_registration_path %>
+              </li>
               <li><a href="#">Sincronizar notas</a></li>
               <li class="divider"></li>
               <li>
-                <%= link_to "Salir", destroy_user_session_path, method: :delete %>
+                <%= link_to fa_icon('power-off', text: 'Cerrar sesión'), destroy_user_session_path, method: :delete %>
               </li>
             <% else %>
               <li>
